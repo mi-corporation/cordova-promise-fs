@@ -21,6 +21,15 @@ Are you entangled in a async callback mess to get even the simplest task done? W
   cordova plugin add cordova-plugin-file-transfer # optional
 ```
 
+### mi-corporation change
+This fork differs from the original repository in the following ways:
+- 2018: write -- don't convert text to Blob
+- 2018: normalize -- avoid appending slash to any path that has a dot in any segment, not just last segment
+- 2018: read -- Handle FileReader errors instead of resolving with null
+- 2024: when accessing the local file system in Android, default to the file:// prefix instead of http://. The reason for this fix is described here:
+https://github.com/apache/cordova-plugin-file-transfer/issues/378
+
+
 **IMPORTANT:** For iOS, use Cordova 3.7.0 or higher (due to a [bug](https://github.com/AppGyver/steroids/issues/534) that affects requestFileSystem).
 
 Or just download and include [CordovaPromiseFS.js](https://raw.githubusercontent.com/markmarijnissen/cordova-promise-fs/master/dist/CordovaPromiseFS.js).

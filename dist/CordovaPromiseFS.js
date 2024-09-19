@@ -152,7 +152,8 @@ module.exports = function(options){
   /* Cordova deviceready promise */
   var deviceready,
       isCordova = typeof cordova !== 'undefined' && !options.crosswalk,
-      isCrosswalk = options.crosswalk;
+      isCrosswalk = options.crosswalk,
+      isAndroid = isCordova && !/MSAppHost/.test(navigator.userAgent) && /Android/.test(navigator.userAgent);
   if(isCordova){
     deviceready = new Promise(function(resolve,reject){
       document.addEventListener("deviceready", resolve, false);
@@ -238,7 +239,7 @@ module.exports = function(options){
 
   /* debug */
   fs.then(function(fs){
-    CDV_URL_ROOT = fs.root.toURL();
+    CDV_URL_ROOT = isAndroid ? fs.root.nativeURL : fs.root.toURL();
     CDV_INTERNAL_URL_ROOT = isCordova? fs.root.toInternalURL(): CDV_URL_ROOT;
     window.__fs = fs;
   },function(err){
