@@ -388,7 +388,7 @@ module.exports = function(options){
   /* convert path to URL to be used in JS/CSS/HTML */
   function toURL(path) {
     return file(path).then(function(fileEntry) {
-      return fileEntry.toURL();
+      return isAndroid ? fileEntry.nativeURL : fileEntry.toURL();
     });
   }
 

@@ -150,7 +150,7 @@ module.exports = function(options){
           window.requestFileSystem(type, grantedBytes, resolve, reject);
         }, reject);
 
-      // Exotic Cordova Directories (options.fileSystem = string)
+        // Exotic Cordova Directories (options.fileSystem = string)
       } else if(isNaN(type)) {
         window.resolveLocalFileSystemURL(type,function(directory){
             resolve(directory.filesystem);
@@ -315,7 +315,7 @@ module.exports = function(options){
   /* convert path to URL to be used in JS/CSS/HTML */
   function toURL(path) {
     return file(path).then(function(fileEntry) {
-      return fileEntry.toURL();
+      return isAndroid ? fileEntry.nativeURL : fileEntry.toURL();
     });
   }
 
@@ -545,7 +545,7 @@ module.exports = function(options){
       transferOptions = {};
     }
     if(isCordova && localPath.indexOf('://') < 0) localPath = toURLSync(localPath);
-
+    
     transferOptions = transferOptions || {};
     if(!transferOptions.retry || !transferOptions.retry.length) {
       transferOptions.retry = options.retry;
