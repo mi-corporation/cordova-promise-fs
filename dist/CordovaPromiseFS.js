@@ -388,7 +388,9 @@ module.exports = function(options){
   /* convert path to URL to be used in JS/CSS/HTML */
   function toURL(path) {
     return file(path).then(function(fileEntry) {
-      return isAndroid ? fileEntry.nativeURL : fileEntry.toURL();
+      // NOTE: we would expect Android to require fileEntry.nativeURL instead of fileEntry.toURL() because it requires the file:// naming scheme rather than http://
+      // however, if we return fileEntry.nativeURL here then the Image Annotation field fails to load images; so leave as is for now since it works
+      return fileEntry.toURL();
     });
   }
 
